@@ -3,7 +3,7 @@ package client4s.elasticsearch
 import java.net.InetAddress
 import java.util.concurrent.TimeUnit
 
-import client4s.elasticsearch.ElasticSearch._
+import client4s.elasticsearch.ESImplicits._
 import org.elasticsearch.action.index.IndexResponse
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.common.settings.Settings

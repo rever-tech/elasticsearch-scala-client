@@ -15,7 +15,6 @@ object ESImplicits {
 
   type Req[T <: ActionRequest[T]] = ActionRequest[T]
   type Resp = ActionResponse
-  type ReqBuilder[I <: Req[I], J <: Resp, K <: ActionRequestBuilder[I, J, K]] = ActionRequestBuilder[I, J, K]
 
   implicit class ZActionRequestBuilder[I <: Req[I], J <: Resp, K <: ActionRequestBuilder[I, J, K]](arb: ActionRequestBuilder[I, J, K]) {
 

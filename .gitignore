@@ -2,7 +2,7 @@
 ### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
-
+.idea/
 # User-specific stuff:
 .idea/workspace.xml
 .idea/tasks.xml
@@ -73,7 +73,6 @@ project/boot/
 .history
 .cache
 
-.gitignore
 .idea/compiler.xml
 .idea/copyright/
 .idea/misc.xml
@@ -81,6 +80,3 @@ project/boot/
 .idea/modules/client4s.iml
 .idea/sbt.xml
 .idea/thriftCompiler.xml
-build.sbt
-project/
-src/

@@ -88,6 +88,7 @@ class JavaClientAsyncTest extends FunSuite {
 
 
     val query = new TermQueryBuilder("user", "elon")
+    println(s"Client Query ${query.toString}")
     val asyncSearchResp = client.prepareSearch(indexName).setQuery(query).asyncGet()
     asyncSearchResp onComplete {
       case Success(searchResp) => {

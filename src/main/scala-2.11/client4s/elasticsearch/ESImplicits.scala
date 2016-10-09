@@ -1,11 +1,12 @@
 package client4s.elasticsearch
 
+import com.twitter.util.{Future, Promise}
 import org.elasticsearch.action.support.AbstractListenableActionFuture
 import org.elasticsearch.action.{ActionRequest, ActionRequestBuilder, ActionResponse}
 import org.elasticsearch.threadpool.ThreadPool
 
 import scala.annotation.tailrec
-import scala.concurrent._
+
 
 /**
  * Created by zkidkid on 10/6/16.
@@ -35,14 +36,14 @@ object ESImplicits {
 
     def asyncGet(): Future[J] = {
       val listener = new AbstractListenableActionFuture[J, J](internalThreadPool) {
-        override def onFailure(e: Throwable): Unit = promise.failure(e)
+        override def onFailure(e: Throwable): Unit = promise.raise(e)
 
-        override def onResponse(result: J): Unit = promise.success(result)
+        override def onResponse(result: J): Unit = promise.setValue(result)
 
         override def convert(listenerResponse: J): J = listenerResponse
       }
       arb.execute(listener)
-      promise.future
+      promise
     }
   }
 

@@ -4,7 +4,11 @@ import java.net.InetAddress
 import java.util.concurrent.TimeUnit
 
 import client4s.elasticsearch.ESImplicits._
+import com.twitter.util.{Await, Duration}
+import org.elasticsearch.action.delete.DeleteResponse
+import org.elasticsearch.action.get.GetResponse
 import org.elasticsearch.action.index.IndexResponse
+import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.common.settings.Settings
 import org.elasticsearch.common.transport.InetSocketTransportAddress
@@ -12,10 +16,8 @@ import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.index.query.TermQueryBuilder
 import org.scalatest.FunSuite
 
-import scala.concurrent.Await
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-import scala.util.{Failure, Success}
+import scala.util.Success
+
 
 /**
  * Created by zkidkid on 10/6/16.
@@ -58,67 +60,58 @@ class JavaClientAsyncTest extends FunSuite {
       .endObject()
     val asyncIndexResp = client.prepareIndex(indexName, indexType, id).setSource(user).setRefresh(true).asyncGet()
 
-    asyncIndexResp onSuccess {
-      case resp: IndexResponse => {
+    asyncIndexResp.onSuccess {
+      resp: IndexResponse => {
         println(resp)
         assert(resp.getId.equals(id))
       }
-      case _ => {
-        assert(false)
-      }
     }
-    asyncIndexResp onFailure { case _ => assert(false) }
+    asyncIndexResp onFailure { _ => assert(false) }
+    Await.result(asyncIndexResp, Duration.fromSeconds(5))
 
-    Await.result(asyncIndexResp, 5 seconds)
 
     val getResp = client.prepareGet(indexName, indexType, id).asyncGet()
-    getResp onComplete {
-      case Success(getResp) => {
+    getResp onSuccess {
+      getResp: GetResponse => {
         println("Get Response: " + getResp)
         assert(getResp.getSourceAsMap.get("user").equals("elon"))
         assert(getResp.getSourceAsMap.get("age").equals(Int.MaxValue))
       }
-      case Failure(e) => {
-        e.printStackTrace()
-        assert(false)
-      }
     }
 
-    Await.result(getResp, 5 seconds)
+
+    Await.result(getResp, Duration.fromSeconds(5))
 
 
     val query = new TermQueryBuilder("user", "elon")
     println(s"Client Query ${query.toString}")
     val asyncSearchResp = client.prepareSearch(indexName).setQuery(query).asyncGet()
-    asyncSearchResp onComplete {
-      case Success(searchResp) => {
+    asyncSearchResp.onSuccess {
+      searchResp: SearchResponse => {
         assert(searchResp.getHits.totalHits() == 1)
         assert(searchResp.getHits.getAt(0).getId == id)
         assert(searchResp.getHits.getAt(0).getSource.get("user").equals("elon"))
         assert(searchResp.getHits.getAt(0).getSource.get("age").equals(Int.MaxValue))
       }
-      case Failure(e) => {
-        e.printStackTrace()
-        assert(false)
-      }
+    }
+    asyncSearchResp.onFailure {
+      e: Throwable => assert(false)
     }
 
-    Await.result(asyncSearchResp,5 seconds)
+    Await.result(asyncSearchResp, Duration.fromSeconds(5))
 
 
     val asyncDelResp = client.prepareDelete(indexName, indexType, id).setRefresh(true).asyncGet()
-    asyncDelResp onComplete {
-      case Success(delResp) => {
+    asyncDelResp onSuccess {
+      delResp:DeleteResponse =>{
         assert(delResp.getId.equals(id))
         assert(client.prepareGet(indexName, indexType, id).get().isExists == false)
       }
-      case Failure(e) => {
-        e.printStackTrace()
-        assert(false)
-      }
     }
+    asyncDelResp onFailure{e:Throwable=>assert(false)}
 
-    Await.result(asyncDelResp,5 seconds)
+
+    Await.result(asyncDelResp, Duration.fromSeconds(5))
   }
 
 

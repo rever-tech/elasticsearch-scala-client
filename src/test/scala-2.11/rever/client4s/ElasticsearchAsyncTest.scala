@@ -3,7 +3,6 @@ package rever.client4s
 import java.net.InetAddress
 import java.util.concurrent.TimeUnit
 
-import Elasticsearch._
 import com.twitter.util.{Await, Duration}
 import org.elasticsearch.action.delete.DeleteResponse
 import org.elasticsearch.action.get.GetResponse
@@ -15,9 +14,7 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress
 import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.index.query.TermQueryBuilder
 import org.scalatest.FunSuite
-
-import scala.util.Success
-
+import rever.client4s.Elasticsearch._
 
 /**
  * Created by zkidkid on 10/6/16.
@@ -67,6 +64,7 @@ class ElasticsearchAsyncTest extends FunSuite {
       }
     }
     asyncIndexResp onFailure { _ => assert(false) }
+
     Await.result(asyncIndexResp, Duration.fromSeconds(5))
 
 
@@ -103,12 +101,12 @@ class ElasticsearchAsyncTest extends FunSuite {
 
     val asyncDelResp = client.prepareDelete(indexName, indexType, id).setRefresh(true).asyncGet()
     asyncDelResp onSuccess {
-      delResp:DeleteResponse =>{
+      delResp: DeleteResponse => {
         assert(delResp.getId.equals(id))
         assert(client.prepareGet(indexName, indexType, id).get().isExists == false)
       }
     }
-    asyncDelResp onFailure{e:Throwable=>assert(false)}
+    asyncDelResp onFailure { e: Throwable => assert(false) }
 
 
     Await.result(asyncDelResp, Duration.fromSeconds(5))

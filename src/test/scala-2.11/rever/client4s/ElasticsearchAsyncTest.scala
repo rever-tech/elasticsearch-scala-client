@@ -1,9 +1,9 @@
-package client4s.elasticsearch
+package rever.client4s
 
 import java.net.InetAddress
 import java.util.concurrent.TimeUnit
 
-import client4s.elasticsearch.ESImplicits._
+import Elasticsearch._
 import com.twitter.util.{Await, Duration}
 import org.elasticsearch.action.delete.DeleteResponse
 import org.elasticsearch.action.get.GetResponse
@@ -22,7 +22,7 @@ import scala.util.Success
 /**
  * Created by zkidkid on 10/6/16.
  */
-class JavaClientAsyncTest extends FunSuite {
+class ElasticsearchAsyncTest extends FunSuite {
   // Init TransportClient url: https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/transport-client.html
   val clusterName = "elasticsearch"
   val indexName = "java-client"

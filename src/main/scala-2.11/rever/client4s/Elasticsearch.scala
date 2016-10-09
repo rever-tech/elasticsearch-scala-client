@@ -1,4 +1,4 @@
-package client4s.elasticsearch
+package rever.client4s
 
 import com.twitter.util.{Future, Promise}
 import org.elasticsearch.action.support.AbstractListenableActionFuture
@@ -11,7 +11,7 @@ import scala.annotation.tailrec
 /**
  * Created by zkidkid on 10/6/16.
  */
-object ESImplicits {
+object Elasticsearch {
 
 
   type Req[T <: ActionRequest[T]] = ActionRequest[T]

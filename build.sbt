@@ -1,6 +1,6 @@
 organization := "rever.client4s"
 
-name := "elasticsearch-scala-client-twitter"
+name := "elasticsearch-scala-client"
 
 version := "2.2.0"
 

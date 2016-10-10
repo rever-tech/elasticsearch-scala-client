@@ -1,14 +1,12 @@
 organization := "rever.client4s"
 
-name := "elasticsearch-scala-client-twitter"
+name := "elasticsearch-scala-client"
 
 version := "2.1.1"
 
 scalaVersion := "2.11.8"
 
 libraryDependencies += "org.elasticsearch" % "elasticsearch" % "2.1.1"
-
-libraryDependencies += "com.twitter" %% "util-core" % "6.37.0"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % "test"
 

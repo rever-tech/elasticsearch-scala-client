@@ -3,7 +3,6 @@ package rever.client4s
 import java.net.InetAddress
 import java.util.concurrent.TimeUnit
 
-import com.twitter.util.{Await, Duration}
 import org.elasticsearch.action.delete.DeleteResponse
 import org.elasticsearch.action.get.GetResponse
 import org.elasticsearch.action.index.IndexResponse
@@ -15,6 +14,10 @@ import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.index.query.TermQueryBuilder
 import org.scalatest.FunSuite
 import rever.client4s.Elasticsearch._
+
+import scala.concurrent.Await
+import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * Created by zkidkid on 10/6/16.
@@ -57,54 +60,61 @@ class ElasticsearchAsyncTest extends FunSuite {
       .endObject()
     val asyncIndexResp = client.prepareIndex(indexName, indexType, id).setSource(user).setRefresh(true).asyncGet()
 
-    asyncIndexResp.onSuccess {
-      resp: IndexResponse => {
+    asyncIndexResp onSuccess {
+      case resp: IndexResponse => {
         println(resp)
         assert(resp.getId.equals(id))
       }
-    } onFailure { _ => assert(false) }
+    }
+    asyncIndexResp onFailure {
+      case _ => assert(false)
+    }
 
-    Await.ready(asyncIndexResp, Duration.fromSeconds(5))
-
+    Await.ready(asyncIndexResp, 5 seconds)
 
     val getResp = client.prepareGet(indexName, indexType, id).asyncGet()
+
+
     getResp onSuccess {
-      getResp: GetResponse => {
+      case getResp: GetResponse => {
         println("Get Response: " + getResp)
         assert(getResp.getSourceAsMap.get("user").equals("elon"))
         assert(getResp.getSourceAsMap.get("age").equals(Int.MaxValue))
       }
-    } onFailure (_ => assert(false))
+    }
+    getResp onFailure { case _ => assert(false) }
 
-    Await.ready(getResp, Duration.fromSeconds(5))
+    Await.ready(getResp, 5 seconds)
 
 
     val query = new TermQueryBuilder("user", "elon")
     println(s"Client Query ${query.toString}")
     val asyncSearchResp = client.prepareSearch(indexName).setQuery(query).asyncGet()
     asyncSearchResp onSuccess {
-      searchResp: SearchResponse => {
+      case searchResp: SearchResponse => {
         assert(searchResp.getHits.totalHits() == 1)
         assert(searchResp.getHits.getAt(0).getId == id)
         assert(searchResp.getHits.getAt(0).getSource.get("user").equals("elon"))
         assert(searchResp.getHits.getAt(0).getSource.get("age").equals(Int.MaxValue))
       }
-    } onFailure {
-      e: Throwable => assert(false)
+    }
+    asyncSearchResp onFailure {
+      case e: Throwable => assert(false)
     }
 
-    Await.ready(asyncSearchResp, Duration.fromSeconds(5))
+    Await.ready(asyncSearchResp, 5 seconds)
 
 
     val asyncDelResp = client.prepareDelete(indexName, indexType, id).setRefresh(true).asyncGet()
     asyncDelResp onSuccess {
-      delResp: DeleteResponse => {
+      case delResp: DeleteResponse => {
         assert(delResp.getId.equals(id))
         assert(client.prepareGet(indexName, indexType, id).get().isExists == false)
       }
-    } onFailure { e: Throwable => assert(false) }
+    }
+    asyncDelResp onFailure { case e: Throwable => assert(false) }
 
-    Await.ready(asyncDelResp, Duration.fromSeconds(5))
+    Await.ready(asyncDelResp, 5 seconds)
   }
 
 

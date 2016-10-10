@@ -1,4 +1,14 @@
 language: scala
+branches:
+  only:
+    - twitter_future
+    - scala_future
+services:
+  - elasticsearch
+before_instal:
+  - curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-2.1.1.deb && sudo dpkg -i --force-confnew elasticsearch-1.2.4.deb && sudo service elasticsearch restart
+before_script:
+  - sleep 15
 scala:
   - 2.11.8
 jdk:

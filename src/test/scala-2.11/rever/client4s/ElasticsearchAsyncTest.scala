@@ -65,7 +65,7 @@ class ElasticsearchAsyncTest extends FunSuite {
     }
     asyncIndexResp onFailure { _ => assert(false) }
 
-    Await.result(asyncIndexResp, Duration.fromSeconds(5))
+    Await.ready(asyncIndexResp, Duration.fromSeconds(5))
 
 
     val getResp = client.prepareGet(indexName, indexType, id).asyncGet()
@@ -78,7 +78,7 @@ class ElasticsearchAsyncTest extends FunSuite {
     }
 
 
-    Await.result(getResp, Duration.fromSeconds(5))
+    Await.(getResp, Duration.fromSeconds(5))
 
 
     val query = new TermQueryBuilder("user", "elon")
@@ -96,7 +96,7 @@ class ElasticsearchAsyncTest extends FunSuite {
       e: Throwable => assert(false)
     }
 
-    Await.result(asyncSearchResp, Duration.fromSeconds(5))
+    Await.ready(asyncSearchResp, Duration.fromSeconds(5))
 
 
     val asyncDelResp = client.prepareDelete(indexName, indexType, id).setRefresh(true).asyncGet()
@@ -109,7 +109,7 @@ class ElasticsearchAsyncTest extends FunSuite {
     asyncDelResp onFailure { e: Throwable => assert(false) }
 
 
-    Await.result(asyncDelResp, Duration.fromSeconds(5))
+    Await.ready(asyncDelResp, Duration.fromSeconds(5))
   }
 
 

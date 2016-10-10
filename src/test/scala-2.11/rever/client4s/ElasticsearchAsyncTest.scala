@@ -62,8 +62,7 @@ class ElasticsearchAsyncTest extends FunSuite {
         println(resp)
         assert(resp.getId.equals(id))
       }
-    }
-    asyncIndexResp onFailure { _ => assert(false) }
+    } onFailure { _ => assert(false) }
 
     Await.ready(asyncIndexResp, Duration.fromSeconds(5))
 
@@ -75,24 +74,22 @@ class ElasticsearchAsyncTest extends FunSuite {
         assert(getResp.getSourceAsMap.get("user").equals("elon"))
         assert(getResp.getSourceAsMap.get("age").equals(Int.MaxValue))
       }
-    }
+    } onFailure (_ => assert(false))
 
-
-    Await.(getResp, Duration.fromSeconds(5))
+    Await.ready(getResp, Duration.fromSeconds(5))
 
 
     val query = new TermQueryBuilder("user", "elon")
     println(s"Client Query ${query.toString}")
     val asyncSearchResp = client.prepareSearch(indexName).setQuery(query).asyncGet()
-    asyncSearchResp.onSuccess {
+    asyncSearchResp onSuccess {
       searchResp: SearchResponse => {
         assert(searchResp.getHits.totalHits() == 1)
         assert(searchResp.getHits.getAt(0).getId == id)
         assert(searchResp.getHits.getAt(0).getSource.get("user").equals("elon"))
         assert(searchResp.getHits.getAt(0).getSource.get("age").equals(Int.MaxValue))
       }
-    }
-    asyncSearchResp.onFailure {
+    } onFailure {
       e: Throwable => assert(false)
     }
 
@@ -105,9 +102,7 @@ class ElasticsearchAsyncTest extends FunSuite {
         assert(delResp.getId.equals(id))
         assert(client.prepareGet(indexName, indexType, id).get().isExists == false)
       }
-    }
-    asyncDelResp onFailure { e: Throwable => assert(false) }
-
+    } onFailure { e: Throwable => assert(false) }
 
     Await.ready(asyncDelResp, Duration.fromSeconds(5))
   }

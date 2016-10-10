@@ -1,3 +1,3 @@
 # client4s
 
-library client for scala
+a library client for scala

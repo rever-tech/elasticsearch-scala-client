@@ -44,5 +44,5 @@ License
 
 MIT
 ```diff
-- we believe software should like sex, it's better when it's free ^^ -
+- At Rever,we believe software should like sex, it's better when it's free ^^ -
 ```

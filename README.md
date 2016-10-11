@@ -27,11 +27,11 @@ We support 2 common futures [Scala Future](http://docs.scala-lang.org/overviews/
     val resp = client.prepareIndex(indexName, indexType).setSource(user).asyncGet()
     asyncIndexResp onSuccess {
       resp: IndexResponse => {
-        assert(resp.getId.equals(id))
+        assert(true)
       }
     } onFailure { _ => assert(false) }
 
-Please refer more in Test package [Scala Future](https://github.com/rever-tech/elasticsearch-scala-client/blob/scala_future/src/test/scala-2.11/rever/client4s/ElasticsearchAsyncTest.scala) [Twitter Future](https://github.com/rever-tech/elasticsearch-scala-client/blob/twitter_future/src/test/scala-2.11/rever/client4s/ElasticsearchAsyncTest.scala)
+Please refer more use case in Test package [Scala Future](https://github.com/rever-tech/elasticsearch-scala-client/blob/scala_future/src/test/scala-2.11/rever/client4s/ElasticsearchAsyncTest.scala) [Twitter Future](https://github.com/rever-tech/elasticsearch-scala-client/blob/twitter_future/src/test/scala-2.11/rever/client4s/ElasticsearchAsyncTest.scala)
 
 ### Todos
 
@@ -42,7 +42,7 @@ Please refer more in Test package [Scala Future](https://github.com/rever-tech/e
 License
 ----
 
-MIT
+[MIT](https://opensource.org/licenses/MIT)
 ```diff
 - At Rever,we believe software should like sex, it's better when it's free ^^ -
 ```

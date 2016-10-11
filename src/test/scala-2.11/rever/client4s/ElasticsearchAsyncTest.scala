@@ -57,7 +57,7 @@ class ElasticsearchAsyncTest extends FunSuite {
       .endObject()
     val asyncIndexResp = client.prepareIndex(indexName, indexType, id).setSource(user).setRefresh(true).asyncGet()
 
-    asyncIndexResp.onSuccess {
+    asyncIndexResp onSuccess {
       resp: IndexResponse => {
         println(resp)
         assert(resp.getId.equals(id))

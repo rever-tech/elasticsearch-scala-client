@@ -17,6 +17,7 @@ import rever.client4s.Elasticsearch._
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * Created by zkidkid on 10/6/16.
@@ -59,7 +60,7 @@ class ElasticsearchAsyncTest extends FunSuite {
       .endObject()
     val asyncIndexResp = client.prepareIndex(indexName, indexType, id).setSource(user).setRefresh(true).asyncGet()
 
-    asyncIndexResp onSuccess {
+    asyncIndexResp.onSuccess {
       case resp: IndexResponse => {
         println(resp)
         assert(resp.getId.equals(id))
@@ -67,9 +68,7 @@ class ElasticsearchAsyncTest extends FunSuite {
     }
     asyncIndexResp onFailure { case _ => assert(false) }
 
-
     Await.ready(asyncIndexResp, 5 seconds)
-
 
     val getResp = client.prepareGet(indexName, indexType, id).asyncGet()
 

@@ -37,12 +37,12 @@ Please refer more use case in Test package [Scala Future](https://github.com/rev
 
 | Elasticsearch Version | Test Status |
 |:---------------------:|:-----------:|
-|    2.4.0              | [![2.4.0](https://img.shields.io/badge/2.4.0-passing-green.svg?style=flat)](#)|
-|    2.3.0              | [![2.3.0](https://img.shields.io/badge/2.3.0-passing-green.svg?style=flat)](#)|
-|    2.2.0              | [![2.2.0](https://img.shields.io/badge/2.2.0-passing-green.svg?style=flat)](#)|
-|    2.1.0              | [![2.1.0](https://img.shields.io/badge/2.1.0-passing-green.svg?style=flat)](#)|
-|    2.0.0              | [![2.0.0](https://img.shields.io/badge/2.0.0-passing-green.svg?style=flat)](#)|
-|    1.x                | [![1.x](https://img.shields.io/badge/1.x-unknown-cccccc.svg?style=flat)](#)|
+|    2.4.0              | [![2.4.0](https://img.shields.io/badge/2.4.0-passing-brightgreen.svg?style=flat)](#)|
+|    2.3.0              | [![2.3.0](https://img.shields.io/badge/2.3.0-passing-brightgreen.svg?style=flat)](#)|
+|    2.2.0              | [![2.2.0](https://img.shields.io/badge/2.2.0-passing-brightgreen.svg?style=flat)](#)|
+|    2.1.0              | [![2.1.0](https://img.shields.io/badge/2.1.0-passing-brightgreen.svg?style=flat)](#)|
+|    2.0.0              | [![2.0.0](https://img.shields.io/badge/2.0.0-passing-brightgreen.svg?style=flat)](#)|
+|    1.x                | [![1.x](https://img.shields.io/badge/1.x-unknown-lightgrey.svg?style=flat)](#)|
 
 ### Todos
 

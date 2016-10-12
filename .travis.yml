@@ -17,5 +17,7 @@ before_script:
   - sleep 15
 scala:
   - 2.11.8
+sbt_args: -Delasticsearch_version=${elasticsearch_version}
+
 jdk:
   - oraclejdk8

@@ -33,11 +33,22 @@ We support 2 common futures [Scala Future](http://docs.scala-lang.org/overviews/
 
 Please refer more use case in Test package [Scala Future](https://github.com/rever-tech/elasticsearch-scala-client/blob/scala_future/src/test/scala-2.11/rever/client4s/ElasticsearchAsyncTest.scala) [Twitter Future](https://github.com/rever-tech/elasticsearch-scala-client/blob/twitter_future/src/test/scala-2.11/rever/client4s/ElasticsearchAsyncTest.scala)
 
+# Compatible Tests
+
+| Elasticsearch Version | Test Status |
+|:---------------------:|:-----------:|
+|    2.4.0              | [![2.4.0](https://img.shields.io/badge/2.4.0-passing-brightgreen.svg?style=flat)](#)|
+|    2.3.0              | [![2.3.0](https://img.shields.io/badge/2.3.0-passing-brightgreen.svg?style=flat)](#)|
+|    2.2.0              | [![2.2.0](https://img.shields.io/badge/2.2.0-passing-brightgreen.svg?style=flat)](#)|
+|    2.1.0              | [![2.1.0](https://img.shields.io/badge/2.1.0-passing-brightgreen.svg?style=flat)](#)|
+|    2.0.0              | [![2.0.0](https://img.shields.io/badge/2.0.0-passing-brightgreen.svg?style=flat)](#)|
+|    1.x                | [![1.x](https://img.shields.io/badge/1.x-unknown-lightgrey.svg?style=flat)](#)|
+
 ### Todos
 
  - Auto implicits conversion java collection on Response to scala collection
  - Benchmarks with native java client (use blocking) & other scala client
- - Fell free to add your request
+ - Feel free to add your request
  
 License
 ----

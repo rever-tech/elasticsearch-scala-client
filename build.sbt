@@ -6,7 +6,7 @@ version := "2.4.0-1"
 
 scalaVersion := "2.11.8"
 
-libraryDependencies += "org.elasticsearch" % "elasticsearch" % "2.4.0"
+libraryDependencies += "org.elasticsearch" % "elasticsearch" % sys.props.getOrElse("elasticsearch_version", default="2.4.0")
 
 libraryDependencies += "com.twitter" %% "util-core" % "6.37.0"
 

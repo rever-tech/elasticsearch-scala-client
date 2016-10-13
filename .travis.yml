@@ -1,4 +1,10 @@
 language: scala
+env:
+  - elasticsearch_version=2.4.0
+  - elasticsearch_version=2.3.0
+  - elasticsearch_version=2.2.0
+  - elasticsearch_version=2.1.0
+  - elasticsearch_version=2.0.0
 branches:
   only:
     - twitter_future
@@ -6,10 +12,12 @@ branches:
 #services:
 #  - elasticsearch
 before_install:
-  - curl -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.4.0/elasticsearch-2.4.0.deb && sudo dpkg -i --force-confnew elasticsearch-2.4.0.deb && sudo service elasticsearch restart
+  - curl -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/${elasticsearch_version}/elasticsearch-${elasticsearch_version}.deb && sudo dpkg -i --force-confnew elasticsearch-${elasticsearch_version}.deb && sudo service elasticsearch restart
 before_script:
   - sleep 15
 scala:
   - 2.11.8
+sbt_args: -Delasticsearch_version=${elasticsearch_version}
+
 jdk:
   - oraclejdk8

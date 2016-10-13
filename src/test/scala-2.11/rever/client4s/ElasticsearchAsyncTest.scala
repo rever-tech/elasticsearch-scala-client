@@ -114,8 +114,6 @@ class ElasticsearchAsyncTest extends FunSuite {
     Await.ready(asyncDelResp, 5 seconds)
   }
 
-
-
   test("clear evn should successful") {
     val isAck = client.admin().indices().prepareDelete(indexName).execute().get().isAcknowledged
     assert(isAck)

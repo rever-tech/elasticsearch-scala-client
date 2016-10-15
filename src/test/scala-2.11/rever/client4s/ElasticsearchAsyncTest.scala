@@ -107,6 +107,13 @@ class ElasticsearchAsyncTest extends FunSuite {
     Await.ready(asyncDelResp, Duration.fromSeconds(5))
   }
 
+  test("client should raise exception") {
+    val asynDelIndex = client.prepareDelete(null, null, "404").asyncGet()
+    intercept[Exception] {
+      Await.result(asynDelIndex)
+    }
+  }
+
 
 
   test("clear evn should successful") {

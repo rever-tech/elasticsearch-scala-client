@@ -36,7 +36,7 @@ object Elasticsearch {
 
     def asyncGet(): Future[J] = {
       val listener = new AbstractListenableActionFuture[J, J](internalThreadPool) {
-        override def onFailure(e: Throwable): Unit = promise.raise(e)
+        override def onFailure(e: Throwable): Unit = promise.setException(e)
 
         override def onResponse(result: J): Unit = promise.setValue(result)
 

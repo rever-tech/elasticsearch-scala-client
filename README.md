@@ -8,7 +8,7 @@ We support 2 common futures [Scala Future](http://docs.scala-lang.org/overviews/
         <dependency>
             <groupId>rever.client4s</groupId>
             <artifactId>elasticsearch-scala-client-twitter_2.11</artifactId>
-            <version>2.4.0-1</version>
+            <version>2.4.0-2</version>
         </dependency>
  - Scala Future
     

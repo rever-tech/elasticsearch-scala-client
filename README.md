@@ -2,8 +2,15 @@
 A Scala client wrap elasticsarch native client and provide add-on method for non-block function call.
 We support 2 common futures [Scala Future](http://docs.scala-lang.org/overviews/core/futures.html) [![Build Status](https://travis-ci.org/rever-tech/elasticsearch-scala-client.svg?branch=scala_future)](https://travis-ci.org/rever-tech/elasticsearch-scala-client) [Twitter Future](https://twitter.github.io/finagle/guide/Futures.html) [![Build Status](https://travis-ci.org/rever-tech/elasticsearch-scala-client.svg?branch=twitter_future)](https://travis-ci.org/rever-tech/elasticsearch-scala-client)
 
-# Maven 
- - Twitter Future
+# Maven
+
+        <repository>
+            <id>rever-repo</id>
+            <name>rever-repo</name>
+            <url>http://central.rever.vn/artifactory/libs-release-local</url>
+        </repository> 
+ 
+- Twitter Future
     
         <dependency>
             <groupId>rever.client4s</groupId>
